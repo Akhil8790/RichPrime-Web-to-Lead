@@ -4,303 +4,532 @@
 <meta charset="UTF-8">
 <title>Book a Test Drive | RichPrime Motors</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Book a BYD test drive at RichPrime Motors – Balintawak, SM North Edsa or Malolos.">
+<meta name="theme-color" content="#1c1b1b">
+<link rel="icon" href="https://richprimemotors.com/wp-content/uploads/2026/08/cropped-cropped-CompressJPEG.Online_img512x512-1-150x150.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* Tokens pulled from the live richprimemotors.com/booktestdriveform/ page (Elementor kit + the
-   embedded WPForms design CSS) so this Web-to-Lead form reads as part of the site, not a generic
-   Salesforce form: red #d70c19 is the nav/divider brand accent, blue #066aab is the live form's
-   own button colour, and Be Vietnam Pro / Inter are the two fonts the theme loads. */
+/* Brand tokens from richprimemotors.com: red #d70c19 accent, charcoal #363434 header,
+   Be Vietnam Pro headings, Inter body. */
 :root {
-  --rp-ink: #000203;
-  --rp-charcoal: #363434;
-  --rp-section-bg: #f7f9fb;
-  --rp-accent: #d70c19;
-  --rp-action: #066aab;
-  --rp-action-dark: #05517f;
-  --rp-border: rgba(0, 0, 0, .25);
-  --rp-text: rgba(0, 0, 0, .7);
-  --rp-label: rgba(0, 0, 0, .85);
-  --rp-error: #d63637;
-  --rp-success: #2e844a;
-  --rp-radius: 3px;
-  --rp-font-head: "Be Vietnam Pro", "Segoe UI", sans-serif;
-  --rp-font-body: "Inter", "Segoe UI", sans-serif;
+  --red: #d70c19;
+  --red-dark: #b00a14;
+  --red-soft: rgba(215, 12, 25, .08);
+  --ink: #111214;
+  --charcoal: #1c1b1b;
+  --text: #3d4148;
+  --muted: #6b7079;
+  --line: #dfe2e7;
+  --line-strong: #c4c8cf;
+  --surface: #ffffff;
+  --page: #f3f4f6;
+  --success: #1f8a4c;
+  --error: #d63637;
+  --radius: 10px;
+  --head: "Be Vietnam Pro", "Segoe UI", sans-serif;
+  --body: "Inter", "Segoe UI", sans-serif;
+  --ease: cubic-bezier(.2, .7, .2, 1);
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--rp-section-bg); font-family: var(--rp-font-body); color: var(--rp-text); -webkit-font-smoothing: antialiased; }
+html, body { margin: 0; }
+body { font-family: var(--body); color: var(--text); background: var(--page); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
 
-header.site-header { background: var(--rp-charcoal); padding: 18px 24px; display: flex; align-items: center; gap: 16px; border-bottom: 4px solid var(--rp-accent); }
-header.site-header img { height: 48px; display: block; }
-header.site-header span { color: #B0BEC5; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+/* ---------- layout ---------- */
+.layout { display: grid; grid-template-columns: minmax(380px, 44%) 1fr; min-height: 100vh; }
 
-main.form-wrap { max-width: 780px; margin: 40px auto 56px; padding: 0 16px; animation: rpFadeUp .6s ease both; }
-@keyframes rpFadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+/* ---------- hero ---------- */
+.hero {
+  position: sticky; top: 0; height: 100vh; overflow: hidden; color: #fff;
+  background: #121212 url("https://richprimemotors.com/wp-content/uploads/2026/06/BYD_Shark_6-36-1.jpg") 58% 30% / cover no-repeat;
+  display: flex; flex-direction: column; justify-content: space-between; padding: 36px 44px 40px;
+}
+.hero::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8,8,10,.7) 0%, rgba(8,8,10,.1) 26%, rgba(8,8,10,.55) 52%, rgba(8,8,10,.96) 78%, #08080a 100%),
+    linear-gradient(90deg, rgba(8,8,10,.55) 0%, rgba(8,8,10,.15) 70%),
+    linear-gradient(90deg, rgba(215,12,25,.18) 0%, rgba(215,12,25,0) 40%);
+}
+.hero > * { position: relative; }
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand img { height: 46px; width: auto; }
+.brand-tag { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.75); padding-left: 14px; border-left: 1px solid rgba(255,255,255,.3); }
 
-.card { background: #fff; border-radius: 12px; padding: 32px 36px; box-shadow: 0 12px 32px rgba(0, 2, 3, .08), 0 2px 6px rgba(0, 2, 3, .05); }
-h1 { margin: 0 0 8px; font-family: var(--rp-font-head); font-weight: 700; font-size: 28px; color: var(--rp-ink); }
-.intro { margin: 0 0 20px; line-height: 1.55; color: #4a4a48; font-size: 15px; }
-.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--rp-accent); margin-bottom: 10px; }
-.eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--rp-accent); display: inline-block; }
+.hero-copy { max-width: 470px; animation: rise .8s var(--ease) both .1s; }
+.kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #fff; margin: 0 0 16px; }
+.kicker::before { content: ""; width: 28px; height: 3px; background: var(--red); border-radius: 2px; }
+.hero h1 { font-family: var(--head); font-weight: 800; font-size: clamp(34px, 3.6vw, 50px); line-height: 1.06; letter-spacing: -.02em; margin: 0 0 16px; color: #fff; text-shadow: 0 2px 24px rgba(0,0,0,.45); }
+.hero h1 span { color: var(--red); }
+.hero p.lede { font-size: 16px; line-height: 1.6; color: rgba(255,255,255,.82); margin: 0 0 28px; }
+.perks { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.perks li { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,.92); }
+.perks svg { flex: none; width: 30px; height: 30px; padding: 7px; border-radius: 50%; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); color: #fff; backdrop-filter: blur(6px); }
+.hero-foot { font-size: 12px; color: rgba(255,255,255,.55); }
 
-.demo-note { background: #fdecec; border-left: 4px solid var(--rp-accent); padding: 10px 14px; font-size: 12.5px; border-radius: 0 6px 6px 0; margin-bottom: 24px; color: #6b1013; }
+/* ---------- form side ---------- */
+.panel {
+  padding: 56px 56px 40px; display: flex; flex-direction: column; align-items: center;
+  background:
+    radial-gradient(900px 420px at 100% 0%, rgba(215,12,25,.07), transparent 60%),
+    radial-gradient(700px 380px at 0% 100%, rgba(17,18,20,.05), transparent 60%),
+    var(--page);
+}
+.card {
+  width: 100%; max-width: 680px; background: var(--surface); border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(17,18,20,.04), 0 18px 48px -12px rgba(17,18,20,.14);
+  border: 1px solid rgba(17,18,20,.05); overflow: hidden;
+  animation: rise .7s var(--ease) both .2s;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.card-head { padding: 30px 36px 22px; border-bottom: 1px solid var(--line); }
+.card-head h2 { font-family: var(--head); font-weight: 700; font-size: 22px; color: var(--ink); margin: 0 0 6px; letter-spacing: -.01em; }
+.card-head p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.5; }
+.progress { margin-top: 18px; display: flex; align-items: center; gap: 12px; }
+.progress-track { flex: 1; height: 6px; border-radius: 6px; background: #eceef1; overflow: hidden; }
+.progress-bar { height: 100%; width: 0; border-radius: 6px; background: linear-gradient(90deg, var(--red), #ff4b55); transition: width .45s var(--ease); }
+.progress-label { font-size: 12px; font-weight: 600; color: var(--muted); min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; }
+
+form { padding: 8px 36px 32px; }
+.section { padding-top: 26px; }
+.section-title { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; font-family: var(--head); font-size: 15px; font-weight: 700; color: var(--ink); }
+.step { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 12px; font-weight: 700; font-family: var(--body); transition: background .3s; }
+.section.done .step { background: var(--success); }
+.section-title small { font-family: var(--body); font-weight: 500; font-size: 12px; color: var(--muted); margin-left: auto; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .full { grid-column: 1 / -1; }
-.field label { display: block; font-weight: 600; font-size: 13px; color: var(--rp-label); margin-bottom: 6px; }
-.field label .req { color: var(--rp-error); margin-left: 2px; }
-input, select, textarea {
-  width: 100%; padding: 12px 14px; border: 1px solid var(--rp-border); border-radius: var(--rp-radius);
-  font-size: 15px; font-family: var(--rp-font-body); color: var(--rp-text); background: #fff;
-  transition: border-color .18s ease, box-shadow .18s ease;
+
+/* floating-label fields */
+.field { position: relative; }
+.control {
+  width: 100%; height: 56px; padding: 22px 14px 8px; font: 500 16px/1.2 var(--body); color: var(--ink);
+  background: #fff; border: 1.5px solid var(--line); border-radius: var(--radius); outline: none;
+  transition: border-color .18s, box-shadow .18s, background-color .18s; appearance: none;
 }
-textarea { min-height: 96px; resize: vertical; }
-input:hover, select:hover, textarea:hover { border-color: rgba(0, 0, 0, .4); }
-input:focus, select:focus, textarea:focus { outline: none; border-color: var(--rp-action); box-shadow: 0 0 0 3px rgba(6, 106, 171, .15); }
-.field.invalid input, .field.invalid select, .field.invalid textarea { border-color: var(--rp-error); animation: rpShake .32s ease; }
-@keyframes rpShake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(2px); } 30%, 50%, 70% { transform: translateX(-3px); } 40%, 60% { transform: translateX(3px); } }
-.field-msg { display: none; font-size: 12px; margin-top: 5px; }
-.field.invalid .error-msg { display: block; color: var(--rp-error); }
-.field.valid .success-msg { display: block; color: var(--rp-success); }
-
-select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e%3cpath fill='%23555' d='M7 10l5 5 5-5z'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 12px center; background-size: 18px; padding-right: 38px; }
-
-button.submit-btn {
-  margin-top: 26px; background: var(--rp-action); color: #fff; border: 0; padding: 13px 30px;
-  font-family: var(--rp-font-body); font-size: 16px; font-weight: 600; border-radius: var(--rp-radius);
-  cursor: pointer; transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease;
-  display: inline-flex; align-items: center; gap: 10px;
+textarea.control { height: auto; min-height: 104px; padding-top: 26px; resize: vertical; line-height: 1.45; }
+.field label.float {
+  position: absolute; left: 15px; top: 18px; font-size: 15px; color: var(--muted); pointer-events: none;
+  transform-origin: left top; transition: transform .18s var(--ease), color .18s;
 }
-button.submit-btn:hover { background: var(--rp-action-dark); transform: translateY(-1px); box-shadow: 0 8px 18px rgba(6, 106, 171, .28); }
-button.submit-btn:active { transform: translateY(0); }
-button.submit-btn:disabled { opacity: .65; cursor: not-allowed; transform: none; box-shadow: none; }
-.spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .5); border-top-color: #fff; animation: rpSpin .7s linear infinite; display: none; }
-button.submit-btn.loading .spinner { display: inline-block; }
-button.submit-btn.loading .btn-label { opacity: .85; }
-@keyframes rpSpin { to { transform: rotate(360deg); } }
+.control:focus + label.float,
+.control:not(:placeholder-shown) + label.float,
+select.control + label.float { transform: translateY(-10px) scale(.78); font-weight: 600; }
+.control:focus + label.float { color: var(--red); }
+.control::placeholder { color: transparent; }
+.control:focus::placeholder { color: #a3a8b0; }
+.control:hover { border-color: var(--line-strong); }
+.control:focus { border-color: var(--red); box-shadow: 0 0 0 4px var(--red-soft); }
+.req { color: var(--red); }
 
-footer.site-footer { max-width: 780px; margin: 0 auto 40px; padding: 0 16px; font-size: 12px; color: #6b6b6b; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-footer.site-footer b { color: var(--rp-ink); font-family: var(--rp-font-head); }
+select.control { padding-right: 42px; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7079' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 18px; }
+select.control:invalid { color: #a3a8b0; }
+select.control option { color: var(--ink); }
 
-.success-panel { display: none; background: #fff; border-radius: 12px; padding: 48px 36px; text-align: center; box-shadow: 0 12px 32px rgba(0, 2, 3, .08); animation: rpFadeUp .5s ease both; }
-.success-panel.show { display: block; }
-.success-check { width: 64px; height: 64px; border-radius: 50%; background: #e2f4e9; color: var(--rp-success); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; animation: rpPop .4s cubic-bezier(.34, 1.56, .64, 1) both; }
-@keyframes rpPop { from { transform: scale(.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-.success-panel h2 { font-family: var(--rp-font-head); color: var(--rp-ink); margin: 0 0 8px; }
-.success-panel p { color: #555; margin: 0 0 22px; line-height: 1.55; }
-.back-link { display: inline-block; color: #fff; background: var(--rp-charcoal); padding: 11px 24px; border-radius: var(--rp-radius); text-decoration: none; font-weight: 600; font-size: 14px; transition: background-color .16s ease; }
-.back-link:hover { background: #222; }
+.field .tick { position: absolute; right: 14px; top: 19px; width: 18px; height: 18px; color: var(--success); opacity: 0; transform: scale(.6); transition: .2s var(--ease); pointer-events: none; }
+.field.valid .tick { opacity: 1; transform: none; }
+.field.select .tick { right: 40px; }
 
+.msg { display: none; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 500; color: var(--error); margin: 6px 2px 0; }
+.invalid > .msg, .invalid .msg { display: flex; }
+.field.invalid .control { border-color: var(--error); box-shadow: 0 0 0 4px rgba(214,54,55,.08); }
+.field.invalid label.float { color: var(--error); }
+.shake { animation: shake .35s ease; }
+@keyframes shake { 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+
+/* choice groups (segmented, dealership cards, chips) */
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+legend { padding: 0; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+.choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+
+.segmented { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.segmented .choice span {
+  display: flex; align-items: center; justify-content: center; gap: 10px; height: 52px; border-radius: var(--radius);
+  border: 1.5px solid var(--line); background: #fff; font-weight: 600; font-size: 15px; color: var(--text); cursor: pointer;
+  transition: .18s var(--ease);
+}
+.segmented svg { width: 18px; height: 18px; }
+
+.dealers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.dealers .choice span {
+  position: relative; display: flex; flex-direction: column; gap: 4px; height: 100%; padding: 14px 14px 14px; border-radius: var(--radius);
+  border: 1.5px solid var(--line); background: #fff; cursor: pointer; transition: .18s var(--ease);
+}
+.dealers b { font-family: var(--head); font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.25; }
+.dealers em { font-style: normal; font-size: 12px; color: var(--muted); }
+.dealers .choice span::after {
+  content: ""; position: absolute; top: 12px; right: 12px; width: 16px; height: 16px; border-radius: 50%;
+  border: 1.5px solid var(--line-strong); background: #fff; transition: .18s var(--ease);
+}
+
+.chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.chips .choice span {
+  display: flex; align-items: center; justify-content: center; height: 42px; padding: 0 12px; border-radius: 999px;
+  border: 1.5px solid var(--line); background: #fff; font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; transition: .18s var(--ease);
+}
+
+.choice span:hover { border-color: var(--line-strong); background: #fafafb; }
+.choice input:focus-visible + span { box-shadow: 0 0 0 4px var(--red-soft); border-color: var(--red); }
+.choice input:checked + span { border-color: var(--red); background: #fff6f6; color: var(--ink); box-shadow: 0 0 0 1px var(--red) inset; }
+.dealers .choice input:checked + span::after { border-color: var(--red); background: var(--red); box-shadow: inset 0 0 0 3px #fff; }
+.chips .choice input:checked + span { background: var(--ink); border-color: var(--ink); color: #fff; box-shadow: none; }
+.invalid .segmented .choice span, .invalid .dealers .choice span, .invalid .chips .choice span { border-color: rgba(214,54,55,.55); }
+
+.optional-note { font-size: 12px; color: var(--muted); }
+
+/* submit */
+.actions { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+.submit {
+  width: 100%; height: 58px; border: 0; border-radius: 12px; cursor: pointer; color: #fff;
+  font: 700 16px var(--body); letter-spacing: .01em;
+  background: linear-gradient(135deg, var(--red) 0%, #e8303b 100%);
+  box-shadow: 0 10px 24px -8px rgba(215,12,25,.55);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease), filter .18s;
+}
+.submit:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -10px rgba(215,12,25,.6); filter: saturate(1.1); }
+.submit:active { transform: none; }
+.submit:focus-visible { outline: 3px solid rgba(215,12,25,.35); outline-offset: 3px; }
+.submit svg { width: 18px; height: 18px; transition: transform .2s var(--ease); }
+.submit:hover svg { transform: translateX(3px); }
+.submit[disabled] { cursor: progress; filter: grayscale(.2); opacity: .85; transform: none; }
+.spinner { display: none; width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,.4); border-top-color: #fff; animation: spin .7s linear infinite; }
+.submit.loading .spinner { display: block; }
+.submit.loading svg { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.fineprint { margin: 14px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); text-align: center; }
+.fineprint svg { width: 13px; height: 13px; vertical-align: -2px; margin-right: 4px; }
+.form-error { display: none; margin: 0 0 14px; padding: 12px 14px; border-radius: 10px; background: #fdecec; color: #8a1116; font-size: 13.5px; font-weight: 500; }
+.form-error.show { display: block; }
+
+/* success */
+.success { display: none; padding: 56px 40px 48px; text-align: center; }
+.success.show { display: block; animation: rise .6s var(--ease) both; }
+.check { width: 84px; height: 84px; margin: 0 auto 22px; border-radius: 50%; display: grid; place-items: center; background: #e7f6ed; color: var(--success); }
+.check svg { width: 40px; height: 40px; stroke-dasharray: 30; stroke-dashoffset: 30; animation: draw .6s .25s var(--ease) forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.success h2 { font-family: var(--head); font-size: 26px; font-weight: 800; color: var(--ink); margin: 0 0 10px; }
+.success > p { margin: 0 auto 26px; max-width: 420px; line-height: 1.6; color: var(--text); }
+.summary { max-width: 420px; margin: 0 auto 28px; text-align: left; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.summary div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 16px; font-size: 14px; }
+.summary div + div { border-top: 1px solid var(--line); }
+.summary dt { color: var(--muted); }
+.summary dd { margin: 0; font-weight: 600; color: var(--ink); text-align: right; }
+.btn-dark { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 24px; border-radius: 10px; background: var(--ink); color: #fff; text-decoration: none; font-weight: 600; font-size: 14px; transition: background .18s; }
+.btn-dark:hover { background: #000; }
+
+/* dealership directory */
+.directory { width: 100%; max-width: 680px; margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.directory div { padding: 14px 16px; border-radius: 12px; background: rgba(255,255,255,.7); border: 1px solid rgba(17,18,20,.06); font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+.directory b { display: block; font-family: var(--head); font-size: 13px; color: var(--ink); margin-bottom: 2px; }
+.directory a { color: var(--muted); text-decoration: none; }
+.directory a:hover { color: var(--red); }
+.demo-note { margin-top: 18px; font-size: 11.5px; color: #9aa0a8; text-align: center; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1080px) {
+  .layout { grid-template-columns: 1fr; }
+  .hero { position: relative; height: auto; min-height: 420px; padding: 24px 24px 72px; }
+  .hero-copy { margin-top: 48px; }
+  .perks { grid-template-columns: repeat(3, auto); gap: 10px 18px; }
+  .hero-foot { display: none; }
+  .panel { padding: 0 20px 40px; }
+  .card { margin-top: -48px; }
+}
 @media (max-width: 640px) {
-  .grid { grid-template-columns: 1fr; }
-  .card, .success-panel { padding: 24px 20px; border-radius: 10px; }
-  main.form-wrap { margin: 20px auto 40px; }
-  footer.site-footer { grid-template-columns: 1fr; }
+  .hero { min-height: 0; padding: 20px 20px 70px; }
+  .brand img { height: 38px; }
+  .brand-tag { display: none; }
+  .hero-copy { margin-top: 36px; }
+  .hero p.lede { font-size: 15px; margin-bottom: 20px; }
+  .perks { grid-template-columns: 1fr; }
+  .panel { padding: 0 12px 32px; }
+  .card { border-radius: 16px; }
+  .card-head { padding: 24px 20px 18px; }
+  form { padding: 4px 20px 24px; }
+  .grid, .dealers { grid-template-columns: 1fr; }
+  .chips { grid-template-columns: 1fr 1fr; }
+  .dealers .choice span { flex-direction: row; align-items: baseline; justify-content: space-between; padding-right: 40px; }
+  .directory { grid-template-columns: 1fr; }
+  .success { padding: 44px 20px 36px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .check svg { stroke-dashoffset: 0; }
 }
 </style>
 </head>
 <body>
-<header class="site-header">
-  <img src="https://richprimemotors.com/wp-content/uploads/2026/06/Richprime-Motors-Website-Materials-38-300x169.png" alt="BYD | RichPrime Motors">
-  <span>Authorized BYD Dealer</span>
-</header>
+<div class="layout">
 
-<main class="form-wrap">
-  <div class="card" id="formCard">
-    <p class="eyebrow">Test Drive</p>
-    <h1>Book a Test Drive</h1>
-    <p class="intro">Kindly fill in your information, and a representative from our team will get back to you to confirm a date that works for your desired test drive.</p>
-    <div class="demo-note">Demo form: submissions create a Lead in Salesforce (Web-to-Lead), routed to the branch consultant with a follow-up task and bell notification.</div>
+  <aside class="hero" aria-label="RichPrime Motors">
+    <div class="brand">
+      <img src="https://richprimemotors.com/wp-content/uploads/2026/06/Richprime-Motors-Website-Materials-38-300x169.png" alt="BYD | RichPrime Motors">
+      <span class="brand-tag">Authorized BYD Dealer</span>
+    </div>
 
-    <form id="rpForm" action="https://orgfarm-b4e8e9eb69-dev-ed.develop.my.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&amp;orgId=00Dak00001FgSyU" method="POST" target="rpHiddenFrame" novalidate>
-      <input type="hidden" name="oid" value="00Dak00001FgSyU">
-      <input type="hidden" name="retURL" value="https://richprimemotors.com/">
-      <input type="hidden" name="lead_source" value="Website - Book Test Drive">
-      <input type="hidden" id="company" name="company" value="">
-      <input type="hidden" id="description" name="description" value="">
-      <!-- <input type="hidden" name="debug" value="1"> -->
+    <div class="hero-copy">
+      <p class="kicker">Test Drive</p>
+      <h1>Feel it on the road<span>.</span><br>Then decide.</h1>
+      <p class="lede">Tell us which BYD you'd like to drive and where. A RichPrime consultant will get back to you to confirm a date that works for you.</p>
+      <ul class="perks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2l.64-2.54a6 6 0 0 0 0-2.92l-.82-3.28A2 2 0 0 0 18.87 7H5.13a2 2 0 0 0-1.95 1.26l-.82 3.28a6 6 0 0 0 0 2.92L3 17h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>20 BYD models &amp; variants</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Balintawak · SM North Edsa · Malolos</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.18 2 2 0 0 1 4.08 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.1 9.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>We reach you by email or Viber</li>
+      </ul>
+    </div>
 
-      <div class="grid">
-        <div class="field" data-field="first_name">
-          <label for="first_name">First Name<span class="req">*</span></label>
-          <input id="first_name" name="first_name" maxlength="40" type="text" autocomplete="given-name" required>
-          <p class="field-msg error-msg">Enter your first name.</p>
-        </div>
-        <div class="field" data-field="last_name">
-          <label for="last_name">Last Name<span class="req">*</span></label>
-          <input id="last_name" name="last_name" maxlength="80" type="text" autocomplete="family-name" required>
-          <p class="field-msg error-msg">Enter your last name.</p>
-        </div>
+    <p class="hero-foot">Pictured: BYD Shark 6 DMO</p>
+  </aside>
 
-        <div class="field" data-field="email">
-          <label for="email">Email<span class="req">*</span></label>
-          <input id="email" name="email" maxlength="80" type="email" autocomplete="email" required>
-          <p class="field-msg error-msg">Enter a valid email address.</p>
-        </div>
-        <div class="field" data-field="confirm_email">
-          <label for="confirm_email">Confirm Email<span class="req">*</span></label>
-          <input id="confirm_email" type="email" autocomplete="email" required>
-          <p class="field-msg error-msg">Emails do not match.</p>
+  <main class="panel">
+    <div class="card">
+      <div id="formView">
+        <div class="card-head">
+          <h2>Book your test drive</h2>
+          <p>Takes about a minute. Fields marked <span class="req">*</span> are required.</p>
+          <div class="progress" aria-hidden="true">
+            <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+            <span class="progress-label" id="progressLabel">0 of 9</span>
+          </div>
         </div>
 
-        <div class="field" data-field="mobile">
-          <label for="mobile">Phone Number<span class="req">*</span></label>
-          <input id="mobile" name="mobile" maxlength="40" type="tel" autocomplete="tel" placeholder="+63 9xx xxx xxxx" required>
-          <p class="field-msg error-msg">Enter a valid mobile number.</p>
-        </div>
-        <div class="field" data-field="method">
-          <label for="method">Best Way to Reach You<span class="req">*</span></label>
-          <select id="method" name="00Nak000057Erux" title="Best Way to Reach You" required>
-            <option value="" disabled selected>--- Select Choice ---</option>
-            <option value="Email">Email</option>
-            <option value="Phone (Viber)">Phone (Viber)</option>
-          </select>
-          <p class="field-msg error-msg">Choose how we should reach you.</p>
-        </div>
+        <form id="rpForm" action="https://orgfarm-b4e8e9eb69-dev-ed.develop.my.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&amp;orgId=00Dak00001FgSyU" method="POST" target="rpHiddenFrame" novalidate>
+          <input type="hidden" name="oid" value="00Dak00001FgSyU">
+          <input type="hidden" name="retURL" value="https://richprimemotors.com/">
+          <input type="hidden" name="lead_source" value="Website - Book Test Drive">
+          <input type="hidden" id="company" name="company" value="">
+          <input type="hidden" id="description" name="description" value="">
+          <!-- <input type="hidden" name="debug" value="1"> -->
 
-        <div class="field full" data-field="model">
-          <label for="model">Desired Vehicle Model<span class="req">*</span></label>
-          <select id="model" name="00Nak000057Eruv" title="Desired Vehicle Model" required>
-            <option value="" disabled selected>--- Select Choice ---</option>
-            <option value="BYD Sealion 7">BYD Sealion 7</option>
-            <option value="BYD Sealion 6 DM-i">BYD Sealion 6 DM-i</option>
-            <option value="BYD Sealion 5 DM-i">BYD Sealion 5 DM-i</option>
-            <option value="BYD Tang DM-i">BYD Tang DM-i</option>
-            <option value="BYD Shark 6 DMO Premium">BYD Shark 6 DMO Premium</option>
-            <option value="BYD Shark DMO Advanced">BYD Shark DMO Advanced</option>
-            <option value="BYD eMAX7 Superior Captain">BYD eMAX7 Superior Captain</option>
-            <option value="BYD eMAX7 Standard">BYD eMAX7 Standard</option>
-            <option value="BYD Atto 3 Premium">BYD Atto 3 Premium</option>
-            <option value="BYD Atto 3 Dynamic">BYD Atto 3 Dynamic</option>
-            <option value="BYD Seal 5 DM-i Premium">BYD Seal 5 DM-i Premium</option>
-            <option value="BYD Seal 5 DM-i Dynamic">BYD Seal 5 DM-i Dynamic</option>
-            <option value="BYD eMAX9 DM-i Premium">BYD eMAX9 DM-i Premium</option>
-            <option value="BYD eMAX9 DM-i Advanced">BYD eMAX9 DM-i Advanced</option>
-            <option value="BYD Seagull">BYD Seagull</option>
-            <option value="BYD Seal Performance">BYD Seal Performance</option>
-            <option value="BYD Seal Advanced">BYD Seal Advanced</option>
-            <option value="BYD Dolphin">BYD Dolphin</option>
-            <option value="BYD Tang">BYD Tang</option>
-            <option value="BYD Han">BYD Han</option>
-          </select>
-          <p class="field-msg error-msg">Choose the model you would like to test drive.</p>
-        </div>
+          <section class="section" data-section>
+            <h3 class="section-title"><span class="step">1</span>Your details</h3>
+            <div class="grid">
+              <div class="field">
+                <input class="control" id="first_name" name="first_name" maxlength="40" type="text" autocomplete="given-name" placeholder="Juan" required>
+                <label class="float" for="first_name">First name <span class="req">*</span></label>
+                <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                <p class="msg" role="alert">Please enter your first name.</p>
+              </div>
+              <div class="field">
+                <input class="control" id="last_name" name="last_name" maxlength="80" type="text" autocomplete="family-name" placeholder="Dela Cruz" required>
+                <label class="float" for="last_name">Last name <span class="req">*</span></label>
+                <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                <p class="msg" role="alert">Please enter your last name.</p>
+              </div>
+              <div class="field">
+                <input class="control" id="email" name="email" maxlength="80" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+                <label class="float" for="email">Email <span class="req">*</span></label>
+                <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                <p class="msg" role="alert">Please enter a valid email address.</p>
+              </div>
+              <div class="field">
+                <input class="control" id="confirm_email" type="email" autocomplete="email" inputmode="email" placeholder="Type it again" required>
+                <label class="float" for="confirm_email">Confirm email <span class="req">*</span></label>
+                <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                <p class="msg" role="alert">The two emails don't match.</p>
+              </div>
+              <div class="field full">
+                <input class="control" id="mobile" name="mobile" maxlength="40" type="tel" autocomplete="tel" inputmode="tel" placeholder="+63 917 123 4567" required>
+                <label class="float" for="mobile">Mobile number <span class="req">*</span></label>
+                <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                <p class="msg" role="alert">Please enter a valid mobile number, e.g. +63 917 123 4567.</p>
+              </div>
+              <fieldset class="full group" data-group="00Nak000057Erux">
+                <legend>Best way to reach you <span class="req">*</span></legend>
+                <div class="segmented">
+                  <label class="choice"><input type="radio" name="00Nak000057Erux" value="Email" required><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>Email</span></label>
+                  <label class="choice"><input type="radio" name="00Nak000057Erux" value="Phone (Viber)"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5Z"/></svg>Phone (Viber)</span></label>
+                </div>
+                <p class="msg" role="alert">Please choose how we should reach you.</p>
+              </fieldset>
+            </div>
+          </section>
 
-        <div class="field" data-field="branch">
-          <label for="branch">Preferred Dealership<span class="req">*</span></label>
-          <select id="branch" name="00Nak000057Eruu" title="Preferred Dealership" required>
-            <option value="" disabled selected>--- Select Choice ---</option>
-            <option value="BYD Balintawak">BYD Balintawak</option>
-            <option value="BYD SM North Edsa">BYD SM North Edsa</option>
-            <option value="BYD Malolos">BYD Malolos</option>
-          </select>
-          <p class="field-msg error-msg">Choose a dealership.</p>
-        </div>
-        <div class="field" data-field="timeframe">
-          <label for="timeframe">I hope to purchase a new vehicle within...<span class="req">*</span></label>
-          <select id="timeframe" name="00Nak000057Eruy" title="Purchase Timeframe" required>
-            <option value="" disabled selected>--- Select Choice ---</option>
-            <option value="30 Days">30 Days</option>
-            <option value="1-3 Months">1-3 Months</option>
-            <option value="3-6 Months">3-6 Months</option>
-            <option value="6-12 Months">6-12 Months</option>
-            <option value="1-2 Years">1-2 Years</option>
-            <option value="Undecided">Undecided</option>
-          </select>
-          <p class="field-msg error-msg">Choose a purchase timeframe.</p>
-        </div>
+          <section class="section" data-section>
+            <h3 class="section-title"><span class="step">2</span>Your test drive</h3>
+            <div class="grid">
+              <div class="field select full">
+                <select class="control" id="model" name="00Nak000057Eruv" required>
+                  <option value="" disabled selected>Choose a model</option>
+                  <optgroup label="SUVs – Sealion">
+                    <option value="BYD Sealion 7">BYD Sealion 7</option>
+                    <option value="BYD Sealion 6 DM-i">BYD Sealion 6 DM-i</option>
+                    <option value="BYD Sealion 5 DM-i">BYD Sealion 5 DM-i</option>
+                  </optgroup>
+                  <optgroup label="Sedans – Seal">
+                    <option value="BYD Seal 5 DM-i Premium">BYD Seal 5 DM-i Premium</option>
+                    <option value="BYD Seal 5 DM-i Dynamic">BYD Seal 5 DM-i Dynamic</option>
+                    <option value="BYD Seal Performance">BYD Seal Performance</option>
+                    <option value="BYD Seal Advanced">BYD Seal Advanced</option>
+                  </optgroup>
+                  <optgroup label="Compact – Atto, Dolphin, Seagull">
+                    <option value="BYD Atto 3 Premium">BYD Atto 3 Premium</option>
+                    <option value="BYD Atto 3 Dynamic">BYD Atto 3 Dynamic</option>
+                    <option value="BYD Dolphin">BYD Dolphin</option>
+                    <option value="BYD Seagull">BYD Seagull</option>
+                  </optgroup>
+                  <optgroup label="Flagship – Tang &amp; Han">
+                    <option value="BYD Tang DM-i">BYD Tang DM-i</option>
+                    <option value="BYD Tang">BYD Tang</option>
+                    <option value="BYD Han">BYD Han</option>
+                  </optgroup>
+                  <optgroup label="MPVs – eMAX">
+                    <option value="BYD eMAX7 Superior Captain">BYD eMAX7 Superior Captain</option>
+                    <option value="BYD eMAX7 Standard">BYD eMAX7 Standard</option>
+                    <option value="BYD eMAX9 DM-i Premium">BYD eMAX9 DM-i Premium</option>
+                    <option value="BYD eMAX9 DM-i Advanced">BYD eMAX9 DM-i Advanced</option>
+                  </optgroup>
+                  <optgroup label="Pickup – Shark">
+                    <option value="BYD Shark 6 DMO Premium">BYD Shark 6 DMO Premium</option>
+                    <option value="BYD Shark DMO Advanced">BYD Shark DMO Advanced</option>
+                  </optgroup>
+                </select>
+                <label class="float" for="model">Vehicle model <span class="req">*</span></label>
+                <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                <p class="msg" role="alert">Please choose the model you'd like to drive.</p>
+              </div>
 
-        <div class="field full">
-          <label for="vehicle_comment">Vehicle Comment</label>
-          <textarea id="vehicle_comment" maxlength="255" placeholder="Variant, colour or anything about the vehicle"></textarea>
-        </div>
-        <div class="field full">
-          <label for="message">Comment or Message</label>
-          <textarea id="message" maxlength="500"></textarea>
-        </div>
+              <fieldset class="full group" data-group="00Nak000057Eruu">
+                <legend>Preferred dealership <span class="req">*</span></legend>
+                <div class="dealers">
+                  <label class="choice"><input type="radio" name="00Nak000057Eruu" value="BYD Balintawak" required><span><b>BYD Balintawak</b><em>Showroom + Service</em></span></label>
+                  <label class="choice"><input type="radio" name="00Nak000057Eruu" value="BYD SM North Edsa"><span><b>BYD SM North Edsa</b><em>Showroom</em></span></label>
+                  <label class="choice"><input type="radio" name="00Nak000057Eruu" value="BYD Malolos"><span><b>BYD Malolos</b><em>Showroom + Service</em></span></label>
+                </div>
+                <p class="msg" role="alert">Please choose a dealership.</p>
+              </fieldset>
+
+              <fieldset class="full group" data-group="00Nak000057Eruy">
+                <legend>I hope to buy a new vehicle within… <span class="req">*</span></legend>
+                <div class="chips">
+                  <label class="choice"><input type="radio" name="00Nak000057Eruy" value="30 Days" required><span>30 days</span></label>
+                  <label class="choice"><input type="radio" name="00Nak000057Eruy" value="1-3 Months"><span>1–3 months</span></label>
+                  <label class="choice"><input type="radio" name="00Nak000057Eruy" value="3-6 Months"><span>3–6 months</span></label>
+                  <label class="choice"><input type="radio" name="00Nak000057Eruy" value="6-12 Months"><span>6–12 months</span></label>
+                  <label class="choice"><input type="radio" name="00Nak000057Eruy" value="1-2 Years"><span>1–2 years</span></label>
+                  <label class="choice"><input type="radio" name="00Nak000057Eruy" value="Undecided"><span>Not sure yet</span></label>
+                </div>
+                <p class="msg" role="alert">Please choose a timeframe.</p>
+              </fieldset>
+            </div>
+          </section>
+
+          <section class="section">
+            <h3 class="section-title"><span class="step">3</span>Anything else? <small>Optional</small></h3>
+            <div class="grid">
+              <div class="field full">
+                <textarea class="control" id="vehicle_comment" maxlength="255" rows="2" placeholder="Variant, colour, or features you want to try"></textarea>
+                <label class="float" for="vehicle_comment">About the vehicle</label>
+              </div>
+              <div class="field full">
+                <textarea class="control" id="message" maxlength="500" rows="3" placeholder="Preferred day or time, questions for our team…"></textarea>
+                <label class="float" for="message">Message for our team</label>
+              </div>
+            </div>
+          </section>
+
+          <div class="actions">
+            <p class="form-error" id="formError" role="alert">A few details still need your attention – they're highlighted above.</p>
+            <button type="submit" class="submit" id="submitBtn">
+              <span class="spinner" aria-hidden="true"></span>
+              <span class="btn-label">Request my test drive</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+            <p class="fineprint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Your details go straight to the RichPrime sales team.</p>
+          </div>
+        </form>
       </div>
 
-      <button type="submit" class="submit-btn" id="submitBtn">
-        <span class="spinner"></span>
-        <span class="btn-label">Submit</span>
-      </button>
-    </form>
-  </div>
-
-  <div class="success-panel" id="successPanel">
-    <div class="success-check">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="success" id="successView" aria-live="polite">
+        <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h2 id="successTitle">Request received!</h2>
+        <p>Your test drive request has been received. A consultant from your chosen dealership will contact you shortly to confirm the date and time.</p>
+        <dl class="summary">
+          <div><dt>Vehicle</dt><dd id="sumModel">–</dd></div>
+          <div><dt>Dealership</dt><dd id="sumBranch">–</dd></div>
+          <div><dt>We'll reach you by</dt><dd id="sumMethod">–</dd></div>
+        </dl>
+        <a class="btn-dark" href="https://richprimemotors.com/">Back to RichPrime Motors
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
     </div>
-    <h2>Thank You!</h2>
-    <p>Your enquiry has been received. Our team will contact you shortly to confirm your test drive.</p>
-    <a class="back-link" href="https://richprimemotors.com/">Back to Website</a>
-  </div>
-</main>
 
-<!-- Web-to-Lead posts into this hidden iframe so the visitor gets the branded thank-you panel
-     above instead of leaving the page. If JavaScript is disabled the browser still honours the
-     iframe target and the Lead is created, but the visitor sees no on-page confirmation; a
-     production deployment of this page should keep retURL pointed at a real thank-you page on
-     richprimemotors.com as the no-JS fallback. -->
+    <div class="directory">
+      <div><b>BYD Balintawak</b>Showroom + Service<br><a href="tel:+639171389171">+63 917 138 9171</a><br><a href="mailto:sales@richprimemotors.com">sales@richprimemotors.com</a></div>
+      <div><b>BYD SM North Edsa</b>Showroom<br><a href="tel:+639064804644">+63 906 480 4644</a><br><a href="mailto:salesbydne@richprimemotors.com">salesbydne@richprimemotors.com</a></div>
+      <div><b>BYD Malolos</b>Showroom + Service<br><a href="tel:+639173129588">+63 917 312 9588</a><br><a href="mailto:bydmalolos.mktg@gmail.com">bydmalolos.mktg@gmail.com</a></div>
+    </div>
+    <p class="demo-note">Demo form – submissions create a Lead in Salesforce via Web-to-Lead.</p>
+  </main>
+</div>
+
+<!-- Web-to-Lead posts into this hidden iframe so the visitor stays on the page and sees the
+     success view instead of a Salesforce redirect. retURL is the no-JavaScript fallback. -->
 <iframe name="rpHiddenFrame" id="rpHiddenFrame" style="display:none" title="Web-to-Lead submission target"></iframe>
-
-<footer class="site-footer">
-  <div><b>BYD Balintawak</b><br>Service + Showroom<br>+63 917 138 9171<br>sales@richprimemotors.com</div>
-  <div><b>BYD SM North Edsa</b><br>Showroom<br>+63 906 480 4644<br>salesbydne@richprimemotors.com</div>
-  <div><b>BYD Malolos</b><br>Service + Showroom<br>+63 917 312 9588<br>bydmalolos.mktg@gmail.com</div>
-</footer>
 
 <script>
 (function () {
   var form = document.getElementById('rpForm');
   var submitBtn = document.getElementById('submitBtn');
   var frame = document.getElementById('rpHiddenFrame');
-  var formCard = document.getElementById('formCard');
-  var successPanel = document.getElementById('successPanel');
+  var formError = document.getElementById('formError');
   var submitted = false;
 
-  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  var PHONE_RE = /^[+()0-9 -]{7,20}$/;
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var PHONE_RE = /^\+?[0-9()\s-]{7,20}$/;
+  var textFields = ['first_name', 'last_name', 'email', 'confirm_email', 'mobile', 'model'].map(function (id) { return document.getElementById(id); });
+  var groups = Array.prototype.slice.call(form.querySelectorAll('fieldset.group'));
+  var TOTAL = textFields.length + groups.length;
 
-  function fieldWrap(el) { return el.closest('.field'); }
+  function wrap(el) { return el.closest('.field'); }
 
-  function setValid(el) {
-    var wrap = fieldWrap(el);
-    if (!wrap) return;
-    wrap.classList.remove('invalid');
-    wrap.classList.add('valid');
-  }
-  function setInvalid(el) {
-    var wrap = fieldWrap(el);
-    if (!wrap) return;
-    wrap.classList.remove('valid');
-    wrap.classList.add('invalid');
-    wrap.style.animation = 'none';
-    void wrap.offsetWidth;
-    wrap.style.animation = '';
-  }
-
-  function validateField(el) {
-    var value = (el.value || '').trim();
-    if (el.hasAttribute('required') && !value) { setInvalid(el); return false; }
-    if (el.type === 'email' && value && !EMAIL_RE.test(value)) { setInvalid(el); return false; }
-    if (el.id === 'mobile' && value && !PHONE_RE.test(value)) { setInvalid(el); return false; }
-    if (el.id === 'confirm_email') {
-      var email = document.getElementById('email').value.trim().toLowerCase();
-      if (value.toLowerCase() !== email) { setInvalid(el); return false; }
-    }
-    setValid(el);
+  function fieldOk(el) {
+    var v = (el.value || '').trim();
+    if (!v) return false;
+    if (el.type === 'email' && !EMAIL_RE.test(v)) return false;
+    if (el.id === 'mobile' && (!PHONE_RE.test(v) || v.replace(/\D/g, '').length < 7)) return false;
+    if (el.id === 'confirm_email') return v.toLowerCase() === document.getElementById('email').value.trim().toLowerCase();
     return true;
   }
+  function groupOk(fs) { return !!fs.querySelector('input:checked'); }
 
-  var liveFields = form.querySelectorAll('input, select, textarea');
-  liveFields.forEach(function (el) {
-    if (!fieldWrap(el)) return;
-    el.addEventListener('blur', function () { validateField(el); });
-    el.addEventListener('input', function () {
-      if (fieldWrap(el).classList.contains('invalid')) validateField(el);
+  function paint(target, ok, shake) {
+    target.classList.toggle('invalid', !ok);
+    if (target.classList.contains('field')) target.classList.toggle('valid', ok);
+    if (!ok && shake) {
+      target.classList.remove('shake'); void target.offsetWidth; target.classList.add('shake');
+    }
+  }
+
+  function updateProgress() {
+    var done = textFields.filter(fieldOk).length + groups.filter(groupOk).length;
+    document.getElementById('progressBar').style.width = (done / TOTAL * 100) + '%';
+    document.getElementById('progressLabel').textContent = done + ' of ' + TOTAL;
+    form.querySelectorAll('[data-section]').forEach(function (sec) {
+      var inputs = Array.prototype.slice.call(sec.querySelectorAll('.control[required]'));
+      var sets = Array.prototype.slice.call(sec.querySelectorAll('fieldset.group'));
+      sec.classList.toggle('done', inputs.every(fieldOk) && sets.every(groupOk));
     });
+  }
+
+  textFields.forEach(function (el) {
+    el.addEventListener('blur', function () { if (el.value.trim() || wrap(el).classList.contains('invalid')) paint(wrap(el), fieldOk(el)); });
+    el.addEventListener('input', function () {
+      if (wrap(el).classList.contains('invalid') || wrap(el).classList.contains('valid')) paint(wrap(el), fieldOk(el));
+      if (el.id === 'email') {
+        var c = document.getElementById('confirm_email');
+        if (c.value.trim()) paint(wrap(c), fieldOk(c));
+      }
+      updateProgress();
+    });
+    el.addEventListener('change', function () { paint(wrap(el), fieldOk(el)); updateProgress(); });
+  });
+  groups.forEach(function (fs) {
+    fs.addEventListener('change', function () { paint(fs, true); updateProgress(); });
   });
 
   function buildHiddenFields() {
@@ -308,37 +537,57 @@ footer.site-footer b { color: var(--rp-ink); font-family: var(--rp-font-head); }
     var last = document.getElementById('last_name').value.trim();
     document.getElementById('company').value = (first + ' ' + last).trim();
     var parts = [];
-    var vc = document.getElementById('vehicle_comment');
-    if (vc && vc.value.trim()) parts.push('Vehicle comment: ' + vc.value.trim());
-    var msg = document.getElementById('message');
-    if (msg && msg.value.trim()) parts.push('Message: ' + msg.value.trim());
+    var vc = document.getElementById('vehicle_comment').value.trim();
+    var msg = document.getElementById('message').value.trim();
+    if (vc) parts.push('Vehicle comment: ' + vc);
+    if (msg) parts.push('Message: ' + msg);
     document.getElementById('description').value = parts.join('\n');
   }
 
-  form.addEventListener('submit', function (ev) {
-    var toCheck = form.querySelectorAll('.field input[required], .field select[required], #confirm_email');
-    var valid = true;
-    toCheck.forEach(function (el) { if (!validateField(el)) valid = false; });
+  function checkedValue(name) {
+    var el = form.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  }
 
-    if (!valid) {
+  form.addEventListener('submit', function (ev) {
+    var firstBad = null;
+    textFields.forEach(function (el) {
+      var ok = fieldOk(el); paint(wrap(el), ok, true);
+      if (!ok && !firstBad) firstBad = wrap(el);
+    });
+    groups.forEach(function (fs) {
+      var ok = groupOk(fs); paint(fs, ok, true);
+      if (!ok && !firstBad) firstBad = fs;
+    });
+    if (firstBad) {
       ev.preventDefault();
-      var firstInvalid = form.querySelector('.field.invalid');
-      if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      formError.classList.add('show');
+      firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var focusable = firstBad.querySelector('input, select');
+      if (focusable) setTimeout(function () { focusable.focus({ preventScroll: true }); }, 350);
       return;
     }
-
+    formError.classList.remove('show');
     buildHiddenFields();
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
+    submitBtn.querySelector('.btn-label').textContent = 'Sending your request…';
     submitted = true;
   });
 
   frame.addEventListener('load', function () {
-    if (!submitted) return; // ignore the iframe's own initial blank load
-    formCard.style.display = 'none';
-    successPanel.classList.add('show');
-    successPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!submitted) return;
+    var first = document.getElementById('first_name').value.trim();
+    document.getElementById('successTitle').textContent = first ? 'Thank you, ' + first + '!' : 'Request received!';
+    document.getElementById('sumModel').textContent = document.getElementById('model').value;
+    document.getElementById('sumBranch').textContent = checkedValue('00Nak000057Eruu');
+    document.getElementById('sumMethod').textContent = checkedValue('00Nak000057Erux');
+    document.getElementById('formView').hidden = true;
+    document.getElementById('successView').classList.add('show');
+    document.querySelector('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
+  updateProgress();
 })();
 </script>
 </body>
